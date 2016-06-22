@@ -68,60 +68,9 @@ namespace xCarpaccio.client
                 }
                 decimal totalWithTaxe = 0;
 
-                switch (order.Country)
-                {
-                    case "DE":
-                    case "FR":
-                    case "RO":
-                    case "NL":
-                    case "EL":
-                    case "LV":
-                    case "MT":
-                        totalWithTaxe = totalWithoutTax * 1.2m;
-                        break;
-                    case "UK":
-                    case "PL":
-                    case "BG":
-                    case "DK":
-                    case "IE":
-                    case "CY":
-                        totalWithTaxe = totalWithoutTax * 1.21m;
-                        break;
-                    case "IT":
-                    case "LU":
-                        totalWithTaxe = totalWithoutTax * 1.25m;
-                        break;
-                    case "ES":
-                    case "CZ":
-                        totalWithTaxe = totalWithoutTax * 1.19m;
-                        break;
-                    case "BE":
-                    case "SI":
-                        totalWithTaxe = totalWithoutTax * 1.24m;
-                        break;
-                    case "PT":
-                    case "SE":
-                    case "HR":
-                    case "LT":
-                        totalWithTaxe = totalWithoutTax * 1.23m;
-                        break;
-                    case "HU":
-                        totalWithTaxe = totalWithoutTax * 1.27m;
-                        break;
-                    case "AT":
-                    case "EE":
-                        totalWithTaxe = totalWithoutTax * 1.22m;
-                        break;
-                    case "FI":
-                        totalWithTaxe = totalWithoutTax * 1.17m;
-                        break;
-                    case "SK":
-                        totalWithTaxe = totalWithoutTax * 1.18m;
-                        break;
-                    default:
-                        return null;
-
-                }
+                if (!taxes.ContainsKey(order.Country))
+                    return null;
+                totalWithTaxe = totalWithoutTax*taxes[order.Country];
                 decimal totalWithReduction = 0;
                 if (order.Reduction == "STANDARD")
                 {
