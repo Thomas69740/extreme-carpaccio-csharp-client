@@ -22,10 +22,23 @@ namespace xCarpaccio.client
 
                 var order = this.Bind<Order>();
                 Bill bill = null;
+                decimal[] Price = order.Prices;
+                int[] Quantitie = order.Quantities;
+                if (Price.Length != Quantitie.Length)
+                {
+                    return null;
+                }
+                decimal totalWithoutTax = 0;
+                for (int i = 0; i < Price.Length; i++)
+                {
+                    totalWithoutTax += Price[i] * ((decimal)Quantitie[i]);
+                }
+                bill = new Bill();
+                bill.total = totalWithoutTax;
                 //TODO: do something with order and return a bill if possible
                 // If you manage to get the result, return a Bill object (JSON serialization is done automagically)
                 // Else return a HTTP 404 error : return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
-                
+
                 return bill;
             };
 
