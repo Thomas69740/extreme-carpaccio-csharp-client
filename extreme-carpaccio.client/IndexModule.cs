@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace xCarpaccio.client
@@ -11,6 +12,38 @@ namespace xCarpaccio.client
     {
         public IndexModule()
         {
+            Dictionary<string, decimal> taxes = new Dictionary<string, decimal>()
+            {
+                { "DE", 1.2m},
+                {"FR", 1.2m},
+                {"RO", 1.2m},
+                {"NL", 1.2m},
+                {"EL", 1.2m},
+                {"LV", 1.2m},
+                {"MT", 1.2m},
+                {"UK", 1.21m},
+                {"PL", 1.21m},
+                {"BG", 1.21m},
+                {"DK", 1.21m},
+                {"IE", 1.21m},
+                {"CY", 1.21m},
+                {"IT", 1.25m},
+                {"LU", 1.25m},
+                {"ES", 1.19m},
+                {"CZ", 1.19m},
+                {"BE", 1.24m},
+                {"SI", 1.24m},
+                {"PT", 1.23m},
+                {"SE", 1.23m},
+                {"HR", 1.23m},
+                {"LT", 1.23m},
+                {"HU", 1.27m},
+                {"AT", 1.22m},
+                {"EE", 1.22m},
+                {"FI", 1.17m},
+                {"SK", 1.18m},
+            };
+
             Get["/"] = _ => "It works !!! You need to register your server on main server.";
 
             Post["/order"] = _ =>
@@ -34,6 +67,7 @@ namespace xCarpaccio.client
                     totalWithoutTax += ((decimal)Price[i]) * ((decimal)Quantitie[i]);
                 }
                 decimal totalWithTaxe = 0;
+
                 switch (order.Country)
                 {
                     case "DE":
@@ -103,6 +137,10 @@ namespace xCarpaccio.client
                         totalWithReduction = totalWithTaxe*0.97m;
                     else
                         totalWithReduction = totalWithTaxe;
+                }
+                else if (order.Reduction == "PAY THE PRICE")
+                {
+                    totalWithReduction = totalWithTaxe;
                 }
                 else
                 {
