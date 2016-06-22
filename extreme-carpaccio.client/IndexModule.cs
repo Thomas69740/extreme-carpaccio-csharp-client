@@ -68,7 +68,7 @@ namespace xCarpaccio.client
                 }
                 decimal totalWithTaxe = 0;
 
-                if (!taxes.ContainsKey(order.Country))
+                if (order.Country == null || order.Prices == null || !taxes.ContainsKey(order.Country))
                     return null;
                 totalWithTaxe = totalWithoutTax*taxes[order.Country];
                 decimal totalWithReduction = 0;
